@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build output (published as Release assets, not committed)
+dist/
+out/
+
+# Icon-embed output
+index.html (wiki icons).html
+
+# Logs & OS cruft
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

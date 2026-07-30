@@ -1,0 +1,53 @@
+{
+  "name": "artisans-ledger",
+  "productName": "Artisan's Ledger",
+  "version": "1.8.0",
+  "description": "A fantasy-styled ledger and interactive mining map for RuneScape 3 mining & smithing.",
+  "author": "sanctusdesigns",
+  "homepage": "https://github.com/sanctusdesigns/artisansledger",
+  "license": "SEE LICENSE IN LICENSE",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "embed-icons": "node embed_wiki_icons.js \"index.html\"",
+    "dist": "electron-builder --win nsis portable zip --x64"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.sanctusdesigns.artisansledger",
+    "productName": "Artisan's Ledger",
+    "copyright": "Artisan's Ledger. Wiki icons under CC BY-NC-SA 3.0.",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "index.html",
+      "build/icon.ico",
+      "build/icon.png"
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] },
+        { "target": "zip", "arch": ["x64"] }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Artisan's Ledger"
+    },
+    "portable": {
+      "artifactName": "Artisans-Ledger-${version}-portable.exe"
+    }
+  }
+}

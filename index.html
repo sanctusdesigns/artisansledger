@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Artisan's Ledger</title>
-<!--Written by Julius V-->
+
 <!-- PWA: manifest generated inline below so this stays a single self-contained file -->
 <link rel="manifest" id="manifest-link">
 <meta name="theme-color" content="#d9601a">
@@ -83,6 +83,13 @@
   .head-left { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
   .head-logo { width: 65px; height: 65px; flex-shrink: 0; filter: drop-shadow(0 5px 8px rgba(0,0,0,0.7)); transition: transform 0.3s ease; }
   .head-logo:hover { transform: scale(1.1) rotate(-3deg); }
+  /* No default focus box on the clickable logo/icon buttons -- it renders as an ugly
+     white/blue square. Mouse & touch users get no outline; keyboard users still get a
+     soft, on-theme ember glow via :focus-visible so accessibility isn't lost. */
+  .head-logo:focus, .settings-btn:focus, .help-btn:focus, .info-btn:focus { outline: none; }
+  .head-logo:focus-visible, .settings-btn:focus-visible, .help-btn:focus-visible, .info-btn:focus-visible {
+    outline: none; box-shadow: 0 0 0 2px rgba(217, 96, 26, 0.55); border-radius: 8px;
+  }
   .title-group { display: flex; flex-direction: column; justify-content: center; }
   .presents { font-family: var(--font-display); color: var(--ember-hi); font-size: 13px; letter-spacing: 0.08em; margin-bottom: 2px; text-transform: uppercase; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
   #artisan-app h1 { font-family: var(--font-display); font-size: 26px; font-weight: 800; color: #ffe6a3; margin: 0 0 3px; letter-spacing: .05em; text-shadow: 0 1px 0 #7a4d16, 0 2px 4px rgba(0,0,0,0.85), 0 0 14px rgba(246,196,83,0.55), 0 0 28px rgba(240,128,58,0.35); animation: titlePulse 3.6s ease-in-out infinite; }
@@ -132,7 +139,9 @@
   #artisan-app input:focus, #artisan-app select:focus { outline: none; border-color: var(--ember); box-shadow: 0 0 0 2px rgba(217, 96, 26, 0.2); }
   
   #artisan-app .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: middle; border: 1px solid rgba(0,0,0,.5); box-shadow: inset 0 1px 2px rgba(255,255,255,0.2); }
-  #artisan-app .mat-icon { display: inline-block; vertical-align: middle; margin-right: 6px; object-fit: contain; background: var(--icon-bg); border: 1px solid var(--hairline); border-radius: 4px; padding: 2px; image-rendering: -webkit-optimize-contrast; }
+  #artisan-app .mat-icon { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; margin-right: 6px; background: var(--icon-bg); border: 1px solid var(--hairline); border-radius: 4px; padding: 2px; box-sizing: border-box; }
+  #artisan-app .mat-icon svg, #artisan-app .mat-icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .node-ore-icons .mat-icon svg, .ore-filter-btn .mat-icon svg { filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5)); }
   #artisan-app .item-icon-cell { display: flex; align-items: center; gap: 8px; }
   #artisan-app .item-icon-cell select { flex: 1; min-width: 0; }
   #artisan-app .item-icon-cell .mat-icon, #artisan-app .item-icon-cell .swatch { flex-shrink: 0; }
@@ -636,9 +645,11 @@
     .head-logo { width: 36px; height: 36px; }
     .title-group { min-width: 0; }
     .presents { display: none; } /* free up vertical space on small screens */
-    #artisan-app h1 { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #artisan-app h1 { font-size: 15px; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; line-height: 1.15; }
+    #artisan-app h1 .h1-title-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
     #artisan-app .sub { display: none; } /* tagline isn't essential once space is tight */
-    .beta-tag { font-size: 8px; top: -4px; }
+    /* Beta tag drops onto its own line under the title so the version never gets clipped. */
+    .beta-tag { font-size: 8px; top: 0; margin-left: 0; white-space: nowrap; align-self: flex-start; }
 
     .head-actions { flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
     .head-icon-row { display: flex; align-items: center; gap: 8px; }
@@ -759,7 +770,7 @@
       </svg>
       <div class="title-group">
           <div class="presents">Juggleknob's Presents:</div>
-          <h1>Artisan's Ledger <span class="beta-tag">Version 1.8.0 Pre-Release</span></h1>
+          <h1><span class="h1-title-text">Artisan's Ledger</span> <span class="beta-tag">Version 1.8.0 Pre-Release</span></h1>
           <div class="sub">Ledger & Interactive Mining Map</div>
       </div>
     </div>
@@ -862,7 +873,10 @@
     <button class="btn" style="width: 100%; margin-top: 15px;" onclick="document.getElementById('settingsModal').classList.remove('active')">Close</button>
     <div class="legal-footer">
       <p>Created using intellectual property belonging to Jagex Limited under the terms of Jagex's Fan Content Policy. This content is not endorsed by or affiliated with Jagex.</p>
-      <p>Artisan's Ledger is <span class="legal-designed-link" onclick="document.getElementById('settingsModal').classList.remove('active'); document.getElementById('aboutModal').classList.add('active'); window.loadKofiWidget();" title="Click to learn more">Designed by and Copyrighted by JV GM-Kayaba</span>.<br>All Rights Reserved</p>
+      <p>RuneScape&reg; is a registered trademark of Jagex Limited. All in-game items, ores, names, and related imagery are the property of Jagex. Artisan's Ledger is an unofficial, fan-made companion tool and is not affiliated with, endorsed, sponsored, or approved by Jagex.</p>
+      <p>This is a free, non-commercial fan project. Any voluntary contributions support the creator's time and hosting only and do not constitute a sale of Jagex property.</p>
+      <p>Item and ore icons are sourced from the <a href="https://runescape.wiki/" target="_blank" rel="noopener" style="color:var(--gold);">RuneScape Wiki</a> and used under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener" style="color:var(--gold);">CC BY-NC-SA 3.0</a>. The RuneScape Wiki is not affiliated with this project.</p>
+      <p>Artisan's Ledger is <span class="legal-designed-link" onclick="document.getElementById('settingsModal').classList.remove('active'); document.getElementById('aboutModal').classList.add('active'); window.loadKofiWidget();" title="Click to learn more">Designed by and Copyrighted by JV GM-Kayaba</span>.<br>All Rights Reserved.</p>
     </div>
   </div>
 </div>
@@ -1068,7 +1082,7 @@ var GMKAYABA_WAVE_IMAGE_DATA_URI = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAA
 
 
 
-// Mining location data cross-checked against the RuneScape Wiki and RuneHQ's Mining guide.
+// Mining location data cross-checked against the RuneScape Wiki (CC BY-NC-SA).
 // Every ore type tracked by the ledger has at least one confirmed location here.
 // Mining sites cross-referenced against the RuneScape Wiki (Mines list) and the
 // RuneScape Fandom "Mines and mining sites" page. Ore lists reflect the post
@@ -1123,33 +1137,30 @@ function groupedTypeOptions(groups, selected){
 }
 var CATEGORIES = ["Ore","Bar","Specialist Bar","Masterwork"];
 
-// --- Item icons, sourced from RuneHQ's item database (https://www.runehq.com/skill/smithing) ---
-// Filenames follow a predictable "{Metal}_{item_suffix}.png" pattern. If a specific combo
-// doesn't exist (e.g. a metal/item pairing that was never released), the onerror handler on
-// the <img> quietly swaps back to the plain color swatch instead of showing a broken image.
-var ITEM_ICON_SUFFIX = {
-  "Dagger":"dagger", "Sword":"sword", "Scimitar":"scimitar", "Longsword":"longsword",
-  "Two-handed sword":"2h sword", "Mace":"mace", "Warhammer":"warhammer", "Battleaxe":"battleaxe",
-  "Halberd":"halberd", "Spear":"spear", "Claws":"claws", "Knives (throwing)":"throwing knife",
-  "Javelin heads":"javelin heads", "Dart tips":"dart tip", "Arrowtips":"arrowheads", "Bolts (unf)":"bolts unf",
-  "Medium helmet":"med helm", "Full helmet":"full helm", "Coif":"coif",
-  "Chainbody":"chainbody", "Platebody":"platebody",
-  "Platelegs":"platelegs", "Plateskirt":"plateskirt",
-  "Square shield":"square shield", "Kiteshield":"kiteshield",
-  "Gauntlets":"gauntlets", "Chainskirt":"chainskirt", "Metal boots":"armoured boots",
-  "Pickaxe":"pickaxe", "Hatchet":"hatchet",
-  "Ore box":"ore box", "Nails":"nails", "Studs":"studs", "Wire":"wire",
-  "Grapple tip":"grapple tip", "Limbs (crossbow)":"limbs"
+// --- Item icons: original inline-SVG artwork, generated locally from each material's
+// tier colour, with the option to embed real RuneScape Wiki art (see WIKI_ICON_DATA
+// below). Nothing is fetched from any external item database at runtime -- the app ships
+// every icon it draws, so it works fully offline and carries no third-party hotlinking.
+// Each item type maps to a simple silhouette category so weapons/armour/tools read
+// differently at a glance while still being tinted to the chosen metal.
+var ITEM_SHAPE = {
+  "Dagger":"blade", "Sword":"blade", "Scimitar":"blade", "Longsword":"blade",
+  "Two-handed sword":"blade", "Spear":"pole", "Halberd":"pole", "Javelin heads":"tip",
+  "Mace":"blunt", "Warhammer":"blunt", "Battleaxe":"axe", "Claws":"claws",
+  "Knives (throwing)":"tip", "Dart tips":"tip", "Arrowtips":"tip", "Bolts (unf)":"tip",
+  "Medium helmet":"helm", "Full helmet":"helm", "Coif":"helm",
+  "Chainbody":"body", "Platebody":"body",
+  "Platelegs":"legs", "Plateskirt":"legs", "Chainskirt":"legs",
+  "Square shield":"shield", "Kiteshield":"shield",
+  "Gauntlets":"glove", "Metal boots":"boot",
+  "Pickaxe":"axe", "Hatchet":"axe",
+  "Ore box":"box", "Nails":"tip", "Studs":"tip", "Wire":"bar",
+  "Grapple tip":"tip", "Limbs (crossbow)":"pole"
 };
 
-function toRuneHQCase(s){ return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase(); }
-
-// Base bars required to smith one +0 item of this type, sourced from RuneHQ's Smithing
-// guide (https://www.runehq.com/skill/smithing). This is constant across metal tiers --
+// Base bars required to smith one +0 item of this type. Constant across metal tiers --
 // e.g. an iron sword, steel sword, and rune sword all cost 2 bars -- only the upgrade
-// tier changes the *total* (see getTierMultiplier). A few rarer/non-standard types
-// (Ore box, Coif, Halberd, Chainskirt, Grapple tip, Javelin heads) aren't cleanly
-// documented per-metal on RuneHQ, so they use a best-effort approximation.
+// tier changes the *total* (see getTierMultiplier).
 var ITEM_BASE_BARS = {
   "Dagger": 2, "Sword": 2, "Scimitar": 2, "Longsword": 2, "Two-handed sword": 4,
   "Mace": 2, "Warhammer": 2, "Battleaxe": 2, "Halberd": 3, "Spear": 1, "Claws": 2,
@@ -1165,44 +1176,91 @@ var ITEM_BASE_BARS = {
 };
 function baseBarsFor(itemType){ return ITEM_BASE_BARS[itemType] || 1; }
 
-function runehqIconUrl(name){
-  var filename = name.replace(/ /g, '_') + '.png';
-  var letter = name.charAt(0).toLowerCase();
-  return 'https://www.runehq.com/images/itemsdb/' + letter + '/' + filename;
+// --- Colour helpers: derive a light highlight and dark shade from a base hex so each
+// icon gets a simple 3D gradient instead of a flat fill. ---
+function hexToRgb(hex){
+  hex = (hex || '#888888').replace('#','');
+  if(hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  return { r: parseInt(hex.substr(0,2),16), g: parseInt(hex.substr(2,2),16), b: parseInt(hex.substr(4,2),16) };
+}
+function shade(hex, pct){
+  var c = hexToRgb(hex);
+  var t = pct < 0 ? 0 : 255, p = Math.abs(pct);
+  var r = Math.round((t - c.r) * p + c.r), g = Math.round((t - c.g) * p + c.g), b = Math.round((t - c.b) * p + c.b);
+  return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 
-function metalIconUrl(metal){
-  var m = METAL_MAP[metal];
-  if(!m || !m.category || m.category === 'Other') return null;
-  var base = toRuneHQCase(metal);
-  var name = m.category === 'Bar' ? (base + ' bar') : base;
-  return runehqIconUrl(name);
+// Draws an ore nugget: a lumpy rock tinted to the ore colour with a couple of mineral flecks.
+function oreSvg(fill, gid){
+  var hi = shade(fill, 0.4), lo = shade(fill, -0.35), edge = shade(fill, -0.55);
+  return '<defs><radialGradient id="'+gid+'" cx="38%" cy="32%" r="75%">' +
+    '<stop offset="0%" stop-color="'+hi+'"/><stop offset="55%" stop-color="'+fill+'"/><stop offset="100%" stop-color="'+lo+'"/>' +
+    '</radialGradient></defs>' +
+    '<path d="M12 20 L7 30 L11 41 L23 45 L37 42 L43 31 L38 19 L27 15 Z" fill="url(#'+gid+')" stroke="'+edge+'" stroke-width="2.5" stroke-linejoin="round"/>' +
+    '<path d="M20 24 l5 4 -3 5 4 3" fill="none" stroke="'+hi+'" stroke-width="2" stroke-linecap="round" opacity="0.75"/>' +
+    '<circle cx="32" cy="32" r="2.4" fill="'+hi+'" opacity="0.85"/>';
 }
 
-function itemIconUrl(metal, itemType){
-  var suffix = ITEM_ICON_SUFFIX[itemType];
-  if(!suffix || !metal) return null;
-  return runehqIconUrl(toRuneHQCase(metal) + ' ' + suffix);
+// Draws a metal bar/ingot: a trapezoid ingot with a lighter top face.
+function barSvg(fill, gid){
+  var hi = shade(fill, 0.45), top = shade(fill, 0.2), lo = shade(fill, -0.35), edge = shade(fill, -0.55);
+  return '<defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0%" stop-color="'+top+'"/><stop offset="100%" stop-color="'+lo+'"/>' +
+    '</linearGradient></defs>' +
+    '<path d="M11 30 L17 24 L41 24 L47 30 L47 37 L11 37 Z" fill="url(#'+gid+')" stroke="'+edge+'" stroke-width="2" stroke-linejoin="round"/>' +
+    '<path d="M11 30 L17 24 L41 24 L47 30 Z" fill="'+hi+'" stroke="'+edge+'" stroke-width="1.5" stroke-linejoin="round"/>' +
+    '<line x1="22" y1="30" x2="22" y2="37" stroke="'+edge+'" stroke-width="1" opacity="0.4"/>' +
+    '<line x1="34" y1="30" x2="34" y2="37" stroke="'+edge+'" stroke-width="1" opacity="0.4"/>';
 }
 
-// Builds an <img> with a graceful fallback to the plain color-swatch span if the icon 404s.
-function iconOrSwatch(url, metal, sizePx){
+// A generic tinted item token for smithed products.
+function itemSvg(fill, gid){
+  var hi = shade(fill, 0.5), lo = shade(fill, -0.4), edge = shade(fill, -0.6);
+  return '<defs><radialGradient id="'+gid+'" cx="38%" cy="34%" r="70%">' +
+    '<stop offset="0%" stop-color="'+hi+'"/><stop offset="60%" stop-color="'+fill+'"/><stop offset="100%" stop-color="'+lo+'"/>' +
+    '</radialGradient></defs>' +
+    '<circle cx="27" cy="30" r="17" fill="url(#'+gid+')" stroke="'+edge+'" stroke-width="2.5"/>' +
+    '<path d="M27 18 l3.2 6.6 7.2 1 -5.2 5.1 1.2 7.2 -6.4-3.4 -6.4 3.4 1.2-7.2 -5.2-5.1 7.2-1 Z" fill="'+hi+'" opacity="0.85"/>';
+}
+
+var __svgUid = 0;
+function svgIcon(kind, metal, sizePx){
   var size = sizePx || 20;
-  if(!url) return swatchHTML(metal);
-  return '<img src="'+esc(url)+'" alt="" class="mat-icon" style="width:'+size+'px;height:'+size+'px;" loading="lazy" data-fallback-metal="'+esc(metal||'')+'" onerror="window.__iconFallback(this)">';
+  var m = METAL_MAP[metal] || { fill:'#888888' };
+  var gid = 'g' + (++__svgUid);
+  var inner = kind === 'bar' ? barSvg(m.fill, gid) : kind === 'item' ? itemSvg(m.fill, gid) : oreSvg(m.fill, gid);
+  return '<span class="mat-icon" style="width:'+size+'px;height:'+size+'px;" title="'+esc(metal||'')+'">' +
+    '<svg viewBox="0 0 54 54" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + inner + '</svg></span>';
 }
-function swatchHTML(metal){
-  var m = METAL_MAP[metal] || {fill:'#666'};
-  return '<span class="swatch" style="background:linear-gradient(135deg, rgba(255,255,255,0.4), '+m.fill+' 60%)"></span>';
+
+// --- Real RuneScape Wiki item art (CC BY-NC-SA 3.0), embedded as base64 by the
+// bundled embed_wiki_icons.js script so the app stays fully self-contained and offline.
+// Until that script is run this object is empty and the app draws the local SVG icons
+// above instead -- so it always renders something, art or no art. Attribution for these
+// icons is shown in Settings. ---
+var WIKI_ICON_DATA = {}; /* __WIKI_ICON_DATA_INJECT__ */
+
+function wikiIconTag(metal, sizePx){
+  var uri = WIKI_ICON_DATA[metal];
+  if(!uri) return null;
+  var size = sizePx || 20;
+  return '<span class="mat-icon" style="width:'+size+'px;height:'+size+'px;" title="'+esc(metal||'')+'">' +
+    '<img src="'+uri+'" alt="'+esc(metal||'')+'" width="100%" height="100%" loading="lazy"></span>';
 }
-window.__iconFallback = function(imgEl){
-  var metal = imgEl.getAttribute('data-fallback-metal');
-  var span = document.createElement('span');
-  span.className = 'swatch';
-  var m = METAL_MAP[metal] || {fill:'#666'};
-  span.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.4), '+m.fill+' 60%)';
-  imgEl.replaceWith(span);
-};
+
+// Material (ore/bar) icon for the Metal Bank + map. Prefers real embedded Wiki art;
+// falls back to the locally-drawn SVG when the art hasn't been embedded yet.
+function iconForMetal(metal, sizePx){
+  var real = wikiIconTag(metal, sizePx);
+  if(real) return real;
+  var m = METAL_MAP[metal];
+  var kind = (m && m.category === 'Bar') ? 'bar' : 'ore';
+  return svgIcon(kind, metal, sizePx);
+}
+// Smithed-product icon for the Orders + Item Bank tabs.
+function iconForItem(metal, itemType, sizePx){
+  return svgIcon('item', metal, sizePx);
+}
 var TIERS = ["+0 (Base)", "+1", "+2", "+3", "+4", "+5"];
 
 var uid = 0;
@@ -1326,7 +1384,7 @@ function typeOptionsRaw(pairs, selected){
   return pairs.map(function(p){ return '<option value="'+esc(p[0])+'"'+(p[0]===selected?' selected':'')+'>'+esc(p[1])+'</option>'; }).join('');
 }
 
-// Per RuneHQ's Smithing guide (https://www.runehq.com/skill/smithing, "Upgraded Equipment"):
+// Upgrade tiers add extra base bars per the standard RS3 smithing progression:
 // each upgrade level requires the previous item plus a fresh set of bars equal to the
 // number already used, so the TOTAL bars needed doubles at every "+" tier rather than
 // increasing by a flat amount. Base (+0) = 1x, +1 = 2x, +2 = 4x, +3 = 8x, +4 = 16x, +5 = 32x.
@@ -1609,7 +1667,7 @@ function updateRowComputed(tr, listKey, row){
 }
 
 function swatch(metal){
-  return iconOrSwatch(metalIconUrl(metal), metal, 28);
+  return iconForMetal(metal, 28);
 }
 
 function rowBorder(metal){ return METAL_MAP[metal] ? METAL_MAP[metal].fill : 'transparent'; }
@@ -1733,7 +1791,7 @@ function ordersView(){
     else { status='🔴 Need Mats'; cls='mats-bad'; }
     
     return '<tr data-id="'+r.id+'">'+
-      '<td data-label="Item" style="border-left-color:'+rowBorder(r.metal)+'"><div class="item-icon-cell">'+iconOrSwatch(itemIconUrl(r.metal, r.type), r.metal, 34)+'<select data-f="type">'+groupedTypeOptions(ITEM_TYPE_GROUPS, r.type)+'</select></div></td>'+
+      '<td data-label="Item" style="border-left-color:'+rowBorder(r.metal)+'"><div class="item-icon-cell">'+iconForItem(r.metal, r.type, 34)+'<select data-f="type">'+groupedTypeOptions(ITEM_TYPE_GROUPS, r.type)+'</select></div></td>'+
       '<td data-label="For / Label"><input type="text" data-f="label" value="'+esc(r.label||'')+'" placeholder="e.g. For Steve"></td>'+
       '<td data-label="Metal">'+swatch(r.metal)+'<select data-f="metal" style="width:calc(100% - 34px);display:inline-block">'+metalOptions(r.metal, 'Bar')+'</select></td>'+
       '<td data-label="Tier" class="center"><select data-f="tier" style="font-family:var(--font-mono); font-weight:600;">'+typeOptions(TIERS, r.tier)+'</select></td>'+
@@ -1769,7 +1827,7 @@ function finishedView(){
     if(!r.tier) r.tier = "+0 (Base)";
     var soldFlag = r.sold ? '<span class="sold-flag">SOLD</span>' : '';
     return '<tr data-id="'+r.id+'"'+(r.sold?' class="row-sold"':'')+'>'+
-      '<td data-label="Item Type" style="border-left-color:'+rowBorder(r.metal)+'"><div class="item-icon-cell">'+iconOrSwatch(itemIconUrl(r.metal, r.type), r.metal, 34)+'<select data-f="type">'+groupedTypeOptions(ITEM_TYPE_GROUPS, r.type)+'</select>'+soldFlag+'</div></td>'+
+      '<td data-label="Item Type" style="border-left-color:'+rowBorder(r.metal)+'"><div class="item-icon-cell">'+iconForItem(r.metal, r.type, 34)+'<select data-f="type">'+groupedTypeOptions(ITEM_TYPE_GROUPS, r.type)+'</select>'+soldFlag+'</div></td>'+
       '<td data-label="For / Label"><input type="text" data-f="label" value="'+esc(r.label||'')+'" placeholder="e.g. For Steve"></td>'+
       '<td data-label="Metal">'+swatch(r.metal)+'<select data-f="metal" style="width:calc(100% - 34px);display:inline-block">'+metalOptions(r.metal, null)+'</select></td>'+
       '<td data-label="Tier" class="center"><select data-f="tier" style="font-family:var(--font-mono); font-weight:600;">'+typeOptions(TIERS, r.tier)+'</select></td>'+
@@ -1798,13 +1856,13 @@ function zoneZoomThumbHTML(zone){
   '</div>';
 }
 
-// Shows real ore icons (same RuneHQ-sourced icons used everywhere else in the ledger) directly
+// Shows the material's ore icon (locally-drawn SVG or embedded Wiki art) directly
 // on each map marker, so you can see at a glance what's mineable there without clicking in.
 function nodeIconStrip(zone){
   if(!zone.ores.length) return '<span class="pick-icon">🔨</span>';
   var shown = zone.ores.slice(0, 3);
   var extra = zone.ores.length - shown.length;
-  var html = '<span class="node-ore-icons">' + shown.map(function(o){ return iconOrSwatch(metalIconUrl(o), o, 20); }).join('') + '</span>';
+  var html = '<span class="node-ore-icons">' + shown.map(function(o){ return iconForMetal(o, 20); }).join('') + '</span>';
   if(extra > 0) html += '<span class="node-ore-extra">+'+extra+'</span>';
   return html;
 }
@@ -1849,7 +1907,7 @@ function interactiveMapView(){
     var cls = 'mine-chip';
     if(selectedMapZoneIdx === idx) cls += ' selected';
     if(activeOre) cls += zone.ores.includes(activeOre) ? ' match' : ' dim';
-    var oreMini = zone.ores.slice(0, 4).map(function(o){ return iconOrSwatch(metalIconUrl(o), o, 18); }).join('');
+    var oreMini = zone.ores.slice(0, 4).map(function(o){ return iconForMetal(o, 18); }).join('');
     chips += '<button class="'+cls+'" data-mine-idx="'+idx+'" type="button">'+
         '<span class="mine-chip-icons">'+(oreMini || '🔨')+'</span>'+
         '<span class="mine-chip-name">'+esc(zone.name)+'</span>'+
