@@ -1,7 +1,7 @@
 {
   "name": "artisans-ledger",
   "productName": "Artisan's Ledger",
-  "version": "1.8.0",
+  "version": "1.8.4",
   "description": "A fantasy-styled ledger and interactive mining map for RuneScape 3 mining & smithing.",
   "author": "sanctusdesigns",
   "homepage": "https://github.com/sanctusdesigns/artisansledger",

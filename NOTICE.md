@@ -1,20 +1,40 @@
-# Third-party attribution
+# Third-party attribution & legal notices
 
-## RuneScape Wiki icons
+*Artisan's Ledger is a free, non-commercial, unofficial fan project. It is not
+affiliated with, endorsed, sponsored, or approved by Jagex.*
 
-The optional ore and bar inventory icons (embedded via `embed_wiki_icons.js`)
-are sourced from the **RuneScape Wiki** (https://runescape.wiki/) and are used
-under the **Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported
-(CC BY-NC-SA 3.0)** license: https://creativecommons.org/licenses/by-nc-sa/3.0/
+## RuneScape / Jagex intellectual property
 
-Because these assets are **non-commercial** and **share-alike**, any distributed
-build that embeds them must remain non-commercial and carry this attribution.
-Attribution is also shown in the app's Settings panel.
+RuneScape® is a registered trademark of **Jagex Limited**. All in-game items,
+ores, bars, names, and related imagery are the property of Jagex. This project
+uses that intellectual property under **Jagex's Fan Content Policy**, which
+permits non-commercial fan creations. Keep any distribution non-commercial and
+these notices intact.
 
-Builds that ship only the app's built-in drawn (SVG) icons are not affected by
-this attribution.
+### Item & material icons
 
-## RuneScape
+Icons are **Jagex intellectual property**. They are sourced, in priority order:
 
-"RuneScape" is a trademark of **Jagex Ltd.** Artisan's Ledger is an unofficial,
-personal fan project and is not affiliated with, endorsed by, or sponsored by Jagex.
+1. The **official RuneScape Item Database** (`secure.runescape.com/m=itemdb_rs/`),
+   fetched by Grand Exchange item ID.
+2. The **RuneScape Wiki** (`runescape.wiki`) as a fallback.
+
+They are used under Jagex's Fan Content Policy, not sold or relicensed.
+
+## Weird Gloop API (Grand Exchange data)
+
+Grand Exchange item IDs and live prices are provided by the **Weird Gloop API**
+(`api.weirdgloop.org`). Please review the Weird Gloop API terms of use.
+
+## RuneScape Wiki content (CC BY-NC-SA 3.0)
+
+Text/data drawn from the **RuneScape Wiki** (run by Weird Gloop) — and any
+wiki-hosted images used as a fallback — are available under
+**CC BY-NC-SA 3.0** (https://creativecommons.org/licenses/by-nc-sa/3.0/).
+The wiki uses Jagex assets with Jagex's permission.
+
+## Not legal advice
+
+These notes are a good-faith summary, not legal advice. For redistribution
+(e.g. shipping icons inside the desktop build), review Jagex's Fan Content
+Policy and the Weird Gloop API terms directly and confirm your use complies.
