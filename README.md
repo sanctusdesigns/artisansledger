@@ -1,3 +1,4 @@
+<img width="1200" height="420" alt="artisans_ledger_1 8 4" src="https://github.com/user-attachments/assets/411ca4ef-39d3-40cd-a735-fee5d85719e6" />
 THANK YOU FOR DOWNLOADING ARTISAN'S WORKSHOP!
 
 Discord: https://discord.gg/ThV2zEz4BY
