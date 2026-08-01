@@ -1,5 +1,7 @@
 THANK YOU FOR DOWNLOADING ARTISAN'S WORKSHOP!
 
+Discord: https://discord.gg/ThV2zEz4BY
+
 Created using intellectual property belonging to Jagex Limited under the terms of Jagex's Fan Content Policy. This content is not endorsed by or affiliated with Jagex.
 
 RuneScape® is a registered trademark of Jagex Limited. All in-game items, ores, names, and related imagery are the property of Jagex. Artisan's Ledger is an unofficial, fan-made companion tool and is not affiliated with, endorsed, sponsored, or approved by Jagex.
@@ -10,3 +12,5 @@ Item and ore icons are sourced from the RuneScape Wiki and used under CC BY-NC-S
 
 Artisan's Ledger is Designed by and Copyrighted by JV GM-Kayaba.
 All Rights Reserved.
+
+
